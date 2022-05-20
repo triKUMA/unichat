@@ -4,6 +4,8 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { Routes, Route } from "react-router-dom";
 import Login from "../Login/Login";
+import Chats from "../Chats/Chats";
+import { AuthProvider } from "../../contexts/AuthContext";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDg7sViTD5xwyp0CPqfDzbgG496X5AmWAg",
@@ -21,10 +23,12 @@ const db = getFirestore();
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Login />} />
-        {/* <Route path="/chats" component={<Chats />} /> */}
-      </Routes>
+      <AuthProvider auth={auth}>
+        <Routes>
+          <Route path="/" element={<Login auth={auth} />} />
+          <Route path="/chats" element={<Chats />} />
+        </Routes>
+      </AuthProvider>
     </div>
   );
 }
